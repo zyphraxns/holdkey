@@ -366,7 +366,7 @@ final class HoldEngine: ObservableObject {
     }
 
     /// 把内部 reason 标识翻译成中文展示串（英文则译英）。
-    /// 未知 reason（如 SettingsView 的 "手动释放"）原样显示，保持向后兼容。
+    /// 未知 reason 回退到通用「已停止」，保证英文界面绝不回显中文原文。
     private func localizedReason(_ reason: String) -> String {
         switch reason {
         case "appSwitch": return L10n.string("msg.reason.appSwitch")
@@ -374,7 +374,7 @@ final class HoldEngine: ObservableObject {
         case "manualStop": return L10n.string("msg.reason.manualStop")
         case "manualRelease": return L10n.string("msg.reason.manualRelease")
         case "stopped": return L10n.string("msg.stopped")
-        default: return reason
+        default: return L10n.string("msg.stopped")
         }
     }
 

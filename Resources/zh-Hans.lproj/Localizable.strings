@@ -50,7 +50,6 @@
 "preset.jump" = "跳跃";
 "key.space" = "空格";
 "key.codeFallback" = "键(%d)";
-"key.codeFallbackS" = "键(%@)";
 
 "msg.noPermission" = "缺少辅助功能权限，按键发不出去";
 "msg.noTarget" = "找不到目标应用，长按未启动";

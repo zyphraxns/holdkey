@@ -43,7 +43,7 @@ struct SettingsView: View {
                     .font(.system(size: 11))
                     .foregroundStyle(Color.secondary)
                 Button(L10n.string("button.releaseAll")) {
-                    engine.emergencyRelease(reason: "手动释放")
+                    engine.emergencyRelease(reason: "manualRelease")
                 }
             }
 

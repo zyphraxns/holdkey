@@ -50,7 +50,6 @@
 "preset.jump" = "Jump";
 "key.space" = "Space";
 "key.codeFallback" = "Key(%d)";
-"key.codeFallbackS" = "Key(%@)";
 
 "msg.noPermission" = "Missing Accessibility permission — keys can't be sent";
 "msg.noTarget" = "Target app not found; hold did not start";
