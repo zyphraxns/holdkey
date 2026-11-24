@@ -36,6 +36,8 @@ echo "==> 组装 .app bundle"
 rm -rf "$APP"
 mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
 cp "$CACHE/bin/HoldKey" "$APP/Contents/MacOS/HoldKey"
+cp -R "$ROOT/Resources/en.lproj" "$APP/Contents/Resources/"
+cp -R "$ROOT/Resources/zh-Hans.lproj" "$APP/Contents/Resources/"
 
 cat > "$APP/Contents/Info.plist" <<PLIST
 <?xml version="1.0" encoding="UTF-8"?>
@@ -50,6 +52,7 @@ cat > "$APP/Contents/Info.plist" <<PLIST
   <key>CFBundlePackageType</key><string>APPL</string>
   <key>CFBundleExecutable</key><string>HoldKey</string>
   <key>CFBundleInfoDictionaryVersion</key><string>6.0</string>
+  <key>CFBundleAllowMixedLocalizations</key><true/>
   <key>LSMinimumSystemVersion</key><string>14.0</string>
   <key>LSUIElement</key><true/>
   <key>NSHumanReadableCopyright</key><string>MIT</string>

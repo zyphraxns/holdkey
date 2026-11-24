@@ -1,0 +1,68 @@
+/* HoldKey UI localization — Simplified Chinese */
+"menu.holding" = "按住 %@ · %ds";
+"window.settings" = "设置";
+
+"status.idle" = "待命";
+"status.holding" = "按住 %@ · 剩 %d 秒";
+"presets.header" = "预设（每个都有自己的热键）";
+"field.name" = "名称";
+"field.hold" = "按住";
+"field.seconds" = "秒";
+"field.whichKey" = "按住哪个键";
+"field.hotkey" = "热键";
+"button.cancel" = "取消";
+"button.record" = "录制";
+"record.instruction" = "按下新组合键（例如 ⌥⌘H）；Esc 取消。不要用 Ctrl，原神里它是走/跑切换。";
+"button.stop" = "停止";
+"button.start" = "开始按住 %@";
+"hint.running" = "保持游戏在前台即可，别切窗口。";
+"hint.idle" = "选好预设，按它的热键就能直接开始；也可以点上面的按钮。开始后保持游戏在前台。";
+"toggle.autorepeat" = "模拟按键重复";
+"toggle.autorepeat.help" = "有些游戏只认重复的按键事件。如果角色没动，试着切换这个。";
+"button.settings" = "设置";
+"button.quit" = "退出";
+"record.missingModifier" = "请带修饰键，例如 ⌥⌘H";
+"record.noCtrl" = "别用 Ctrl，原神里它是走/跑切换。请换一个组合。";
+"record.done" = "已录制 %@";
+"permission.title" = "还没有按键权限，现在点了不会有反应";
+"permission.guide" = "系统设置 → 隐私与安全性 → 辅助功能，勾上 HoldKey。";
+"permission.open" = "打开设置";
+"permission.recheck" = "我已勾上，重新检查";
+
+"section.permissions" = "权限";
+"perm.granted" = "已获得合成按键权限";
+"perm.missing" = "尚未获得权限：现在按键发不出去";
+"button.openAccessibility" = "打开辅助功能设置";
+"button.recheck" = "重新检查";
+"section.hotkeys" = "全局热键";
+"toggle.hotkeys" = "启用预设热键";
+"hotkey.ready" = "热键已就绪：在游戏里直接按就能触发，不用切出窗口。";
+"hotkey.partial" = "部分热键注册失败（可能被别的 App 占用）。请在面板里换一个组合。";
+"section.safety" = "安全";
+"safety.note" = "松键保证：正常结束、手动停止、退出 App、系统休眠、锁屏、断电、kill 信号都会补发 keyUp。";
+"button.releaseAll" = "立刻释放所有按键";
+"section.about" = "关于";
+"about.note" = "HoldKey 0.1 — 四个预设，每个一键按住指定键 N 秒。";
+
+"preset.forward" = "前进";
+"preset.left" = "左移";
+"preset.back" = "后退";
+"preset.jump" = "跳跃";
+"key.space" = "空格";
+"key.codeFallback" = "键(%d)";
+"key.codeFallbackS" = "键(%@)";
+
+"msg.noPermission" = "缺少辅助功能权限，按键发不出去";
+"msg.noTarget" = "找不到目标应用，长按未启动";
+"msg.holding" = "按住 %@ · %@ %@";
+"msg.completed" = "完成：按住 %@ · %@ %@";
+"msg.interrupted" = "长按已中断";
+"msg.stopped" = "已停止";
+"msg.released" = "%@（已补发 keyUp）";
+"fmt.seconds" = "%d 秒";
+"fmt.secondsDecimal" = "%.1f 秒";
+
+"msg.reason.appSwitch" = "已切换应用，停止长按";
+"msg.reason.panelFocus" = "HoldKey 面板获得焦点，停止长按";
+"msg.reason.manualStop" = "已手动停止";
+"msg.reason.manualRelease" = "已手动释放按键";

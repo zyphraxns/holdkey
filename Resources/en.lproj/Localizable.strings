@@ -1,0 +1,68 @@
+/* HoldKey UI localization — English */
+"menu.holding" = "Holding %@ · %ds";
+"window.settings" = "Settings";
+
+"status.idle" = "Idle";
+"status.holding" = "Holding %@ · %d sec left";
+"presets.header" = "Presets (each has its own hotkey)";
+"field.name" = "Name";
+"field.hold" = "Hold";
+"field.seconds" = "sec";
+"field.whichKey" = "Hold which key";
+"field.hotkey" = "Hotkey";
+"button.cancel" = "Cancel";
+"button.record" = "Record";
+"record.instruction" = "Press a new combo (e.g. ⌥⌘H); Esc cancels. Avoid Ctrl — it toggles walk/run in Genshin.";
+"button.stop" = "Stop";
+"button.start" = "Hold %@";
+"hint.running" = "Keep the game in the foreground; don't switch windows.";
+"hint.idle" = "Pick a preset and press its hotkey to start, or click the button above. Keep the game in the foreground after starting.";
+"toggle.autorepeat" = "Simulate key repeat";
+"toggle.autorepeat.help" = "Some games only respond to repeated key events. If the character doesn't move, try toggling this.";
+"button.settings" = "Settings";
+"button.quit" = "Quit";
+"record.missingModifier" = "Include a modifier key, e.g. ⌥⌘H";
+"record.noCtrl" = "Avoid Ctrl — it toggles walk/run in Genshin. Please use another combo.";
+"record.done" = "Recorded %@";
+"permission.title" = "No key permission yet — clicking won't do anything";
+"permission.guide" = "System Settings → Privacy & Security → Accessibility, then enable HoldKey.";
+"permission.open" = "Open Settings";
+"permission.recheck" = "I've enabled it, recheck";
+
+"section.permissions" = "Permissions";
+"perm.granted" = "Synthetic key permission granted";
+"perm.missing" = "Permission missing: keys can't be sent right now";
+"button.openAccessibility" = "Open Accessibility Settings";
+"button.recheck" = "Recheck";
+"section.hotkeys" = "Global Hotkeys";
+"toggle.hotkeys" = "Enable preset hotkeys";
+"hotkey.ready" = "Hotkeys ready: press in-game to trigger, no need to switch windows.";
+"hotkey.partial" = "Some hotkeys failed to register (possibly taken by another app). Change the combo in the panel.";
+"section.safety" = "Safety";
+"safety.note" = "Key-release guarantee: keyUp is sent on normal finish, manual stop, app quit, system sleep, lockscreen, power loss, and kill signals.";
+"button.releaseAll" = "Release All Keys Now";
+"section.about" = "About";
+"about.note" = "HoldKey 0.1 — four presets, each holding a key for N seconds with one press.";
+
+"preset.forward" = "Forward";
+"preset.left" = "Left";
+"preset.back" = "Back";
+"preset.jump" = "Jump";
+"key.space" = "Space";
+"key.codeFallback" = "Key(%d)";
+"key.codeFallbackS" = "Key(%@)";
+
+"msg.noPermission" = "Missing Accessibility permission — keys can't be sent";
+"msg.noTarget" = "Target app not found; hold did not start";
+"msg.holding" = "Holding %@ · %@ %@";
+"msg.completed" = "Done: Holding %@ · %@ %@";
+"msg.interrupted" = "Hold interrupted";
+"msg.stopped" = "Stopped";
+"msg.released" = "%@ (keyUp re-sent)";
+"fmt.seconds" = "%d s";
+"fmt.secondsDecimal" = "%.1f s";
+
+"msg.reason.appSwitch" = "Stopped — switched to another app";
+"msg.reason.panelFocus" = "Stopped — HoldKey panel took focus";
+"msg.reason.manualStop" = "Stopped manually";
+"msg.reason.manualRelease" = "Keys released manually";

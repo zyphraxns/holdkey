@@ -35,8 +35,8 @@ struct MenuContent: View {
                     .fill(engine.isRunning ? Color.green : Color.secondary.opacity(0.35))
                     .frame(width: 8, height: 8)
                 Text(engine.isRunning
-                     ? "按住 \(engine.activePresetName) · 剩 \(Int(engine.remaining.rounded())) 秒"
-                     : "待命")
+                     ? L10n.string("status.holding", engine.activePresetName, Int32(engine.remaining.rounded()))
+                     : L10n.string("status.idle"))
                     .font(.system(size: 12, weight: .medium))
                     .foregroundStyle(engine.isRunning ? .primary : .secondary)
                 Spacer()
@@ -50,7 +50,7 @@ struct MenuContent: View {
 
             // ── 预设选择 ───────────────────────────
             VStack(alignment: .leading, spacing: 6) {
-                Text("预设（每个都有自己的热键）").font(.system(size: 11))
+                Text(L10n.string("presets.header")).font(.system(size: 11))
                     .foregroundStyle(.secondary)
                 HStack(spacing: 6) {
                     Picker("", selection: Binding(
@@ -64,7 +64,7 @@ struct MenuContent: View {
                     .labelsHidden()
                     .pickerStyle(.menu)
                     .disabled(engine.isRunning)
-                    TextField("名称", text: Binding(
+                    TextField(L10n.string("field.name"), text: Binding(
                         get: { engine.selectedPreset.name },
                         set: { engine.updatePreset(id: engine.selectedPresetID, name: $0) }
                     ))
@@ -77,7 +77,7 @@ struct MenuContent: View {
 
             // ── 时长输入 ───────────────────────────
             HStack(spacing: 8) {
-                Text("按住").font(.system(size: 12))
+                Text(L10n.string("field.hold")).font(.system(size: 12))
                 TextField("30", text: $secondsText)
                     .textFieldStyle(.roundedBorder)
                     .frame(width: 64)
@@ -85,7 +85,7 @@ struct MenuContent: View {
                     .font(.system(size: 13, design: .monospaced))
                     .onSubmit { commitText() }
                     .onChange(of: secondsText) { _, _ in commitText() }
-                Text("秒").font(.system(size: 12))
+                Text(L10n.string("field.seconds")).font(.system(size: 12))
                 Spacer()
                 Stepper("", value: secondsBinding, in: 1...1800, step: 5)
                     .labelsHidden()
@@ -97,7 +97,7 @@ struct MenuContent: View {
 
             // ── 按键选择 ───────────────────────────
             HStack(spacing: 8) {
-                Text("按住哪个键").font(.system(size: 12))
+                Text(L10n.string("field.whichKey")).font(.system(size: 12))
                 Spacer()
                 Picker("", selection: keyBinding) {
                     ForEach(HoldableKey.all) { k in
@@ -113,11 +113,11 @@ struct MenuContent: View {
             // ── 热键录制 ───────────────────────────
             VStack(alignment: .leading, spacing: 4) {
                 HStack(spacing: 8) {
-                    Text("热键").font(.system(size: 12))
+                    Text(L10n.string("field.hotkey")).font(.system(size: 12))
                     Text(preset.hotKey.display)
                         .font(.system(size: 13, weight: .semibold, design: .monospaced))
                     Spacer()
-                    Button(recordingID == preset.id ? "取消" : "录制") {
+                    Button(recordingID == preset.id ? L10n.string("button.cancel") : L10n.string("button.record")) {
                         if recordingID == preset.id { stopRecording() } else { startRecording() }
                     }
                     .font(.system(size: 11))
@@ -125,7 +125,7 @@ struct MenuContent: View {
                     .disabled(engine.isRunning)
                 }
                 if recordingID == preset.id {
-                    Text("按下新组合键（例如 ⌥⌘H）；Esc 取消。不要用 Ctrl，原神里它是走/跑切换。")
+                    Text(L10n.string("record.instruction"))
                         .font(.system(size: 10))
                         .foregroundStyle(recordHint.isEmpty ? Color.secondary : Color.orange)
                         .fixedSize(horizontal: false, vertical: true)
@@ -143,8 +143,8 @@ struct MenuContent: View {
                 HStack {
                     Image(systemName: engine.isRunning ? "stop.fill" : "play.fill")
                     Text(engine.isRunning
-                         ? "停止"
-                         : "开始按住 \(HoldableKey.byID(preset.keyID).label)")
+                         ? L10n.string("button.stop")
+                         : L10n.string("button.start", HoldableKey.byID(preset.keyID).label))
                 }
                 .frame(maxWidth: .infinity)
                 .font(.system(size: 13, weight: .semibold))
@@ -156,8 +156,8 @@ struct MenuContent: View {
 
             // ── 说明 & 提示 ────────────────────────
             Text(engine.isRunning
-                 ? "保持游戏在前台即可，别切窗口。"
-                 : "选好预设，按它的热键就能直接开始；也可以点上面的按钮。开始后保持游戏在前台。")
+                 ? L10n.string("hint.running")
+                 : L10n.string("hint.idle"))
                 .font(.system(size: 11))
                 .foregroundStyle(Color.secondary)
                 .fixedSize(horizontal: false, vertical: true)
@@ -175,10 +175,10 @@ struct MenuContent: View {
             // ── 底部 ──────────────────────────────
             HStack(spacing: 10) {
                 Toggle(isOn: $engine.useAutorepeat) {
-                    Text("模拟按键重复").font(.system(size: 11))
+                    Text(L10n.string("toggle.autorepeat")).font(.system(size: 11))
                 }
                 .toggleStyle(.checkbox)
-                .help("有些游戏只认重复的按键事件。如果角色没动，试着切换这个。")
+                .help(L10n.string("toggle.autorepeat.help"))
                 Spacer()
                 Button {
                     NSApp.activate(ignoringOtherApps: true)
@@ -187,8 +187,8 @@ struct MenuContent: View {
                     Image(systemName: "gearshape")
                 }
                 .buttonStyle(.borderless)
-                .help("设置")
-                Button("退出") { NSApp.terminate(nil) }
+                .help(L10n.string("button.settings"))
+                Button(L10n.string("button.quit")) { NSApp.terminate(nil) }
                     .buttonStyle(.borderless)
                     .font(.system(size: 11))
             }
@@ -217,18 +217,18 @@ struct MenuContent: View {
             }
             let mods = carbonModifiers(from: event.modifierFlags)
             guard mods != 0 else {
-                DispatchQueue.main.async { self.recordHint = "请带修饰键，例如 ⌥⌘H" }
+                DispatchQueue.main.async { self.recordHint = L10n.string("record.missingModifier") }
                 return nil
             }
             let combo = HotKeyCombo(keyCode: code, modifiers: mods,
                                     keyLabel: PresetDefaults.keyLabel(for: code))
             if combo.containsControl {
-                DispatchQueue.main.async { self.recordHint = "别用 Ctrl，原神里它是走/跑切换。请换一个组合。" }
+                DispatchQueue.main.async { self.recordHint = L10n.string("record.noCtrl") }
                 return nil
             }
             DispatchQueue.main.async {
                 self.engine.updatePreset(id: id, hotKey: combo)
-                self.recordHint = "已录制 \(combo.display)"
+                self.recordHint = L10n.string("record.done", combo.display)
                 self.stopRecording()
             }
             return nil
@@ -272,18 +272,18 @@ struct PermissionBanner: View {
                 Image(systemName: "exclamationmark.triangle.fill")
                     .foregroundStyle(Color.orange)
                     .font(.system(size: 11))
-                Text("还没有按键权限，现在点了不会有反应")
+                Text(L10n.string("permission.title"))
                     .font(.system(size: 11, weight: .semibold))
             }
-            Text("系统设置 → 隐私与安全性 → 辅助功能，勾上 HoldKey。")
+            Text(L10n.string("permission.guide"))
                 .font(.system(size: 10))
                 .foregroundStyle(Color.secondary)
                 .fixedSize(horizontal: false, vertical: true)
             HStack(spacing: 8) {
-                Button("打开设置") { Permissions.openAccessibilityPane() }
+                Button(L10n.string("permission.open")) { Permissions.openAccessibilityPane() }
                     .font(.system(size: 11))
                     .controlSize(.small)
-                Button("我已勾上，重新检查") { engine.refreshPermissions() }
+                Button(L10n.string("permission.recheck")) { engine.refreshPermissions() }
                     .font(.system(size: 11))
                     .controlSize(.small)
             }

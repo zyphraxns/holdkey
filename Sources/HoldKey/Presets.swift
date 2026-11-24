@@ -41,20 +41,20 @@ struct HoldPreset: Codable, Identifiable, Equatable {
 enum PresetDefaults {
     /// 默认全部 ⌥⌘ 开头，不含 Ctrl。
     static let all: [HoldPreset] = [
-        .init(id: 0, name: "前进", keyID: "w",     seconds: 30,
+        .init(id: 0, name: L10n.string("preset.forward"), keyID: "w",     seconds: 30,
               hotKey: .optionCommand(UInt32(kVK_ANSI_H), label: "H")),
-        .init(id: 1, name: "左移", keyID: "a",     seconds: 30,
+        .init(id: 1, name: L10n.string("preset.left"), keyID: "a",     seconds: 30,
               hotKey: .optionCommand(UInt32(kVK_ANSI_J), label: "J")),
-        .init(id: 2, name: "后退", keyID: "s",     seconds: 30,
+        .init(id: 2, name: L10n.string("preset.back"), keyID: "s",     seconds: 30,
               hotKey: .optionCommand(UInt32(kVK_ANSI_K), label: "K")),
-        .init(id: 3, name: "跳跃", keyID: "space", seconds: 30,
+        .init(id: 3, name: L10n.string("preset.jump"), keyID: "space", seconds: 30,
               hotKey: .optionCommand(UInt32(kVK_ANSI_L), label: "L")),
     ]
 
     /// 常见按键的可读标签。录制热键时用不到全部，但覆盖字母和数字就够用了。
     static func keyLabel(for code: UInt32) -> String {
         if let s = keyMap[code] { return s }
-        return "键(code)"
+        return L10n.string("key.codeFallback", Int32(code))
     }
 
     private static let keyMap: [UInt32: String] = [
@@ -66,7 +66,7 @@ enum PresetDefaults {
         0x1E: "]", 0x1F: "O", 0x20: "U", 0x21: "[", 0x22: "I", 0x23: "P",
         0x25: "L", 0x26: "J", 0x27: "'", 0x28: "K", 0x29: ";", 0x2A: "\\",
         0x2B: ",", 0x2C: "/", 0x2D: "N", 0x2E: "M", 0x2F: ".",
-        0x30: "Tab", 0x31: "空格", 0x32: "`", 0x33: "Delete", 0x35: "Esc",
+        0x30: "Tab", 0x31: L10n.string("key.space"), 0x32: "`", 0x33: "Delete", 0x35: "Esc",
         0x7B: "←", 0x7C: "→", 0x7D: "↓", 0x7E: "↑",
     ]
 }

@@ -37,14 +37,14 @@ struct HoldKeyApp: App {
         } label: {
             // 待命只显示键盘图标；运行时菜单栏直接显示「预设名 · Ns」。
             if engine.isRunning {
-                Text("\(engine.activePresetName) · \(Int(engine.remaining.rounded()))s")
+                Text(L10n.string("menu.holding", engine.activePresetName, Int32(engine.remaining.rounded())))
             } else {
                 Image(systemName: "keyboard")
             }
         }
         .menuBarExtraStyle(.window)
 
-        Window("设置", id: "settings") {
+        Window(L10n.string("window.settings"), id: "settings") {
             SettingsView(engine: engine)
         }
         .windowResizability(.contentSize)

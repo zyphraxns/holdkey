@@ -106,7 +106,7 @@ final class HoldEngine: ObservableObject {
                 let pid = app.processIdentifier
                 if pid != ProcessInfo.processInfo.processIdentifier { self.previousApp = app }
                 if let targetPID = self.targetPID, pid != targetPID {
-                    self.stop(reason: "已切换应用，停止长按")
+                    self.stop(reason: "appSwitch")
                 }
             }
         }
@@ -115,7 +115,7 @@ final class HoldEngine: ObservableObject {
             forName: NSWindow.didBecomeKeyNotification, object: nil, queue: .main
         ) { [weak self] _ in
             MainActor.assumeIsolated {
-                if self?.targetPID != nil { self?.stop(reason: "HoldKey 面板获得焦点，停止长按") }
+                if self?.targetPID != nil { self?.stop(reason: "panelFocus") }
             }
         }
     }
@@ -281,7 +281,7 @@ final class HoldEngine: ObservableObject {
 
     private func hotKeyFired(presetID: Int) {
         selectPreset(id: presetID)
-        if isRunning { stop(reason: "手动停止") } else { fire(presetID: presetID) }
+        if isRunning { stop(reason: "manualStop") } else { fire(presetID: presetID) }
     }
 
     // MARK: - 触发 / 停止
@@ -301,7 +301,7 @@ final class HoldEngine: ObservableObject {
             Permissions.requestPostEventAccess()
         }
         if !permissionsOK {
-            lastMessage = "缺少辅助功能权限，按键发不出去"
+            lastMessage = L10n.string("msg.noPermission")
             Log.write("fire blocked: no permission")
             return
         }
@@ -317,7 +317,7 @@ final class HoldEngine: ObservableObject {
         // 关键一步：先把焦点还给游戏，再开始发键。
         // 顺序不能反 —— 先发键再切窗口，开头那一小段会打进我们自己的面板。
         guard let target = restoreFocus() else {
-            lastMessage = "找不到目标应用，长按未启动"
+            lastMessage = L10n.string("msg.noTarget")
             return
         }
         let id = UUID()
@@ -331,7 +331,7 @@ final class HoldEngine: ObservableObject {
         Log.write("fire key=\(key.label) vk=\(key.vk) secs=\(secs) focus=\(NSWorkspace.shared.frontmostApplication?.localizedName ?? "nil") prev=\(previousApp?.localizedName ?? "nil") selfActive=\(NSApp.isActive) keyWindow=\(kw.map { String(describing: type(of: $0)) } ?? "nil")")
         remaining = secs
         activePresetName = preset.name
-        lastMessage = "按住 \(preset.name) · \(key.label) \(fmt(secs))"
+        lastMessage = L10n.string("msg.holding", preset.name, key.label, fmt(secs))
 
         let repeatEnabled = useAutorepeat
         task = Task { [weak self] in
@@ -343,25 +343,39 @@ final class HoldEngine: ObservableObject {
             }
             guard let self, self.runID == id else { return }
             self.resetRun()
-            self.lastMessage = completed ? "完成：按住 \(preset.name) · \(key.label) \(self.fmt(secs))" : "长按已中断"
+            self.lastMessage = completed ? L10n.string("msg.completed", preset.name, key.label, self.fmt(secs)) : L10n.string("msg.interrupted")
         }
         startTicker(total: secs)
     }
 
-    func stop(reason: String = "已停止") {
+    func stop(reason: String = "stopped") {
         guard isRunning else {
             // 即使没在跑，也扫一遍残留，保证幂等安全
             HeldKeys.shared.releaseAll()
             return
         }
         let released = cancelRun()
-        lastMessage = released.isEmpty ? reason : "\(reason)（已补发 keyUp）"
+        let base = localizedReason(reason)
+        lastMessage = released.isEmpty ? base : L10n.string("msg.released", base)
     }
 
     /// 退出/休眠/锁屏等所有异常路径都走这里。
     func emergencyRelease(reason: String) {
         cancelRun()
-        lastMessage = reason
+        lastMessage = localizedReason(reason)
+    }
+
+    /// 把内部 reason 标识翻译成中文展示串（英文则译英）。
+    /// 未知 reason（如 SettingsView 的 "手动释放"）原样显示，保持向后兼容。
+    private func localizedReason(_ reason: String) -> String {
+        switch reason {
+        case "appSwitch": return L10n.string("msg.reason.appSwitch")
+        case "panelFocus": return L10n.string("msg.reason.panelFocus")
+        case "manualStop": return L10n.string("msg.reason.manualStop")
+        case "manualRelease": return L10n.string("msg.reason.manualRelease")
+        case "stopped": return L10n.string("msg.stopped")
+        default: return reason
+        }
     }
 
     @discardableResult
@@ -399,6 +413,6 @@ final class HoldEngine: ObservableObject {
     }
 
     private func fmt(_ s: Double) -> String {
-        s == s.rounded() ? "\(Int(s)) 秒" : String(format: "%.1f 秒", s)
+        s == s.rounded() ? L10n.string("fmt.seconds", Int32(s)) : L10n.string("fmt.secondsDecimal", s)
     }
 }
