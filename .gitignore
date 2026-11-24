@@ -1,0 +1,33 @@
+# Build outputs
+.build-cache/
+dist/
+.signing/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# IDE / editor
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Signing material — never commit private keys or certificates
+*.p12
+*.cer
+*.pem
+*.key
+*.mobileprovision
+
+# Logs
+*.log
+
+# Local scratch notes
+*.local.md
+
+# Internal orchestration notes and temporary backups (not part of the product)
+.orchestrator/
+*.bak.md
